@@ -8,6 +8,12 @@ public class MusicPlayer : MonoBehaviour
     // Start is called before the first frame update
     [SerializeField] float levelLoadDelay = 5f;
 
+
+    private void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
+
     void Start()
     {
         Invoke("LoadFirstScene", levelLoadDelay);
