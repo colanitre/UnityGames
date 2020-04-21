@@ -4,32 +4,36 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
-public class Player : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
+    [Header("General")]
     [SerializeField] float xSpeed = 4f;
     [SerializeField] float ySpeed = 4f;
     [SerializeField] float xRange = 5f;
     [SerializeField] float yRange = 3f;
 
+    [Header("Screen-position Based")]
     [SerializeField] float positionPitchFactor = -5f;
-    [SerializeField] float controlPitchFactor = -20f;
     [SerializeField] float positionYawFactor = 5f;
+
+    [Header("Control-throw Based")]
+    [SerializeField] float controlPitchFactor = -20f;    
     [SerializeField] float controlRollFactor = -20f;
 
     Rigidbody rigidBody;
 
     float xThrow, yThrow;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    bool isControlEnabled = true;
 
     // Update is called once per frame
     void Update()
     {
-        ProcessTranslation();
-        ProcessRotation();
+        if (isControlEnabled)
+        {
+            ProcessTranslation();
+            ProcessRotation();
+        }
+
     }
 
     private void ProcessRotation()
@@ -58,5 +62,10 @@ public class Player : MonoBehaviour
 
         //transform.Rotate(Vector3.forward*horizontalThrow);
         transform.localPosition = new Vector3(newXPos, newYPos, transform.localPosition.z);
+    }
+
+    private void OnPlayerDeath() // Called by string references in CollisionHandler
+    {
+        isControlEnabled = false;
     }
 }

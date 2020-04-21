@@ -1,32 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class MusicPlayer : MonoBehaviour
 {
     // Start is called before the first frame update
-    [SerializeField] float levelLoadDelay = 5f;
-
-
+    
     private void Awake()
     {
-        DontDestroyOnLoad(gameObject);
+        int numMusicPlayer = FindObjectsOfType<MusicPlayer>().Length;
+        if (numMusicPlayer > 1)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            DontDestroyOnLoad(gameObject);
+        }
+            
     }
 
-    void Start()
-    {
-        Invoke("LoadFirstScene", levelLoadDelay);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-    private void LoadFirstScene()
-    {
-        SceneManager.LoadScene(1);
-    }
 }
