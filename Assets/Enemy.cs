@@ -38,7 +38,7 @@ public class Enemy : MonoBehaviour
     private void ProcessHit()
     {
         scoreBoard.ScoreHit(scorePerHit);
-        hits -= 1;
+        hits = hits-1;
     }
 
     private void KillEnemy()
